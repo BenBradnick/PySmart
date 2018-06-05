@@ -1,2 +1,3 @@
 # PySmart
-Testing webhook interface with IFTTT
+
+Application to test controlling and monitoring devices using IFTTT
