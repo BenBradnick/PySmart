@@ -1,18 +1,16 @@
 import logging
-from pysmart.dataaccess.webhooksender import WebhookSender
 
 
-class WebhookManager:
+class UrlManager:
 
     valid_protocols = ["HTTPS", "HTTP"]
 
     def __init__(self, hostname, protocol="HTTPS"):
+        self.logger = logging.getLogger(__name__)
         self.hostname_check(hostname)
         self.protocol_check(protocol)
         self.hostname = hostname
         self.protocol = protocol
-        self.webhook_sender = WebhookSender()
-        self.logger = logging.getLogger(__name__)
 
     def hostname_check(self, hostname):
         self.raise_value_error_if_none("Hostname", hostname)
@@ -21,6 +19,9 @@ class WebhookManager:
         self.raise_value_error_if_none("Protocol", protocol)
         if protocol not in self.valid_protocols:
             raise ValueError("Invalid protocol")
+
+    def build_url(self, path):
+        return self.protocol.lower() + "://" + self.hostname + '/' + path
 
     @staticmethod
     def raise_value_error_if_none(attribute, argument):

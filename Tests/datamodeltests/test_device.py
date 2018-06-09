@@ -3,7 +3,7 @@ from pysmart.datamodel.device import Device
 from pysmart.framework.state import State
 
 
-class TestCreatingNewDevice(unittest.TestCase):
+class CreatingNewDevice(unittest.TestCase):
 
     def test_new_device_is_in_off_state(self):
         device = Device("Light")
@@ -21,7 +21,8 @@ class TestCreatingNewDevice(unittest.TestCase):
 
         self.assertRaises(ValueError, Device, name)
 
-class TestSwitchingDeviceState(unittest.TestCase):
+
+class SwitchingDeviceState(unittest.TestCase):
 
     def test_turning_device_on_changes_state_to_on(self):
         device = Device("Light")
