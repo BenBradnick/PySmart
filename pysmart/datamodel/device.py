@@ -11,7 +11,7 @@ class Device:
         self.name = name
         self.state = State.OFF
         self.logger = logging.getLogger(__name__)
-        self.logger.info("Created device {0}".format(name))
+        self.logger.info("Created device: {0}".format(name))
 
     def turn_on(self):
         self.state = State.ON
