@@ -199,3 +199,86 @@ class FindMethod(unittest.TestCase):
         found_device = device_manager.find("Lamp")
 
         self.assertEquals("Lamp", found_device.name)
+
+    def test_returns_None_when_device_with_device_name_does_not_exist(self):
+        device1_name = "Toaster"
+        device2_name = "Lamp"
+        device3_name = "Bedroom light"
+        device4_name = "Living room light"
+        device1 = Device(device1_name)
+        device2 = Device(device2_name)
+        device3 = Device(device3_name)
+        device4 = Device(device4_name)
+        device_list = [device1, device2, device3, device4]
+        device_manager = DeviceManager(devices=device_list)
+
+        found_device = device_manager.find("Bathroom heater")
+
+        self.assertEquals(None, found_device)
+
+
+class DeviceWithSameNameAlreadyExistsMethod(unittest.TestCase):
+
+    def test_returns_True_for_device_name_already_used(self):
+        device_name = "Bedroom lamp"
+        device = Device(device_name)
+        device_manager = DeviceManager(devices=device)
+
+        self.assertEquals(
+            True, device_manager.device_with_same_name_already_exists(device)
+        )
+
+    def test_returns_False_for_device_name_not_yet_used(self):
+        device1_name = "Bedroom lamp"
+        device2_name = "Living room light"
+        device1 = Device(device1_name)
+        device2 = Device(device2_name)
+        device_manager = DeviceManager(devices=device1)
+
+        self.assertEquals(
+            False, device_manager.device_with_same_name_already_exists(device2)
+        )
+
+
+class DeleteMethod(unittest.TestCase):
+
+    def test_removes_device_with_device_name_from_device_list_with_one_device(self):
+        device_name = "Bedroom lamp"
+        device = Device(device_name)
+        device_manager = DeviceManager(devices=device)
+
+        device_manager.delete(device_name)
+
+        self.assertEquals(0, len(device_manager.device_list))
+
+    def test_removes_device_with_device_name_from_device_list_with_two_devices(self):
+        device1_name = "Bedroom lamp"
+        device2_name = "Living room light"
+        device1 = Device(device1_name)
+        device2 = Device(device2_name)
+        device_manager = DeviceManager(devices=[device1, device2])
+
+        device_manager.delete(device1_name)
+
+        self.assertEquals(1, len(device_manager.device_list))
+        self.assertEquals(device2_name, device_manager.device_list[0].name)
+
+    def test_does_nothing_to_empty_device_list(self):
+        device_manager = DeviceManager()
+
+        device_manager.delete("Bathroom heater")
+
+        self.assertEquals(0, len(device_manager.device_list))
+
+    def test_does_not_remove_device_when_device_name_does_not_exist(self):
+        device1_name = "Bedroom lamp"
+        device2_name = "Living room light"
+        device1 = Device(device1_name)
+        device2 = Device(device2_name)
+        device_manager = DeviceManager(devices=[device1, device2])
+
+        device_manager.delete("Bathroom heater")
+
+        self.assertEquals(2, len(device_manager.device_list))
+        self.assertEquals(device1_name, device_manager.device_list[0].name)
+        self.assertEquals(device2_name, device_manager.device_list[1].name)

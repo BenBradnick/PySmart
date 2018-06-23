@@ -13,7 +13,7 @@ class DeviceManager:
 
     def add(self, device):
         if isinstance(device, Device):
-            if self.device_already_exists(device):
+            if self.device_with_same_name_already_exists(device):
                 raise ValueError("Device already exists with same name")
             self.device_list.append(device)
         else:
@@ -34,8 +34,16 @@ class DeviceManager:
                 return device
         return None
 
-    def device_already_exists(self, new_device):
+    def device_with_same_name_already_exists(self, new_device):
         for device in self.device_list:
             if new_device.name == device.name:
                 return True
         return False
+
+    def delete(self, device_name):
+        for index, device in enumerate(self.device_list):
+            if device.name == device_name:
+                del self.device_list[index]
+                return
+
+    # TODO: turn on and turn off methods by name
