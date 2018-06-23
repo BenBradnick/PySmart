@@ -1,6 +1,7 @@
 import requests
 from pysmart.framework.httpstatuscodes import StatusCodes
 
+
 class WebhookSender:
 
     def __init__(self):

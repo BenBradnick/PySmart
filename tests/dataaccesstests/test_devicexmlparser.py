@@ -25,18 +25,18 @@ class ParsingDeviceXmlFile(unittest.TestCase):
     def test_parser_gets_two_ifttt_devices_from_valid_string(self):
         parser = DeviceXmlParser()
         xml_string = """<?xml version="1.0" encoding="UTF-8"?>
-<devices>
-    <iftttdevice>
-        <name>Fairy lights</name>
-        <on_webhook_path>fairy_lights_on</on_webhook_path>
-        <off_webhook_path>fairy_lights_off</off_webhook_path>
-    </iftttdevice>
-    <iftttdevice>
-        <name>Master bedroom lamp</name>
-        <on_webhook_path>master_bedroom_lamp_on</on_webhook_path>
-        <off_webhook_path>master_bedroom_lamp_off</off_webhook_path>
-    </iftttdevice>
-</devices>"""
+        <devices>
+            <iftttdevice>
+                <name>Fairy lights</name>
+                <on_webhook_path>fairy_lights_on</on_webhook_path>
+                <off_webhook_path>fairy_lights_off</off_webhook_path>
+            </iftttdevice>
+            <iftttdevice>
+                <name>Master bedroom lamp</name>
+                <on_webhook_path>master_bedroom_lamp_on</on_webhook_path>
+                <off_webhook_path>master_bedroom_lamp_off</off_webhook_path>
+            </iftttdevice>
+        </devices>"""
 
         ifttt_devices = parser.get_ifttt_devices(xml_string)
 
@@ -60,7 +60,7 @@ class ParsingDeviceXmlFile(unittest.TestCase):
 
         self.assertEquals(0, len(ifttt_devices))
 
-    def test_empty_xml_string_with_header_returns_no_ifttt_devices(self):
+    def test_empty_xml_string_with_header_returns_empty_ifttt_device_list(self):
         parser = DeviceXmlParser()
         xml_string = '<?xml version="1.0" encoding="UTF-8"?>'
 
@@ -68,7 +68,7 @@ class ParsingDeviceXmlFile(unittest.TestCase):
 
         self.assertEquals(0, len(ifttt_devices))
 
-    def test_empty_xml_string_returns_no_ifttt_devices(self):
+    def test_empty_xml_string_returns_empty_ifttt_device_list(self):
         parser = DeviceXmlParser()
         xml_string = ''
 

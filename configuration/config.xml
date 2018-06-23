@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<devices>
+<config>
+    <ifttt_api_key>
+        <key>o2GLkZlVbUrf3Fj7aA9wm</key>
+    </ifttt_api_key>
     <iftttdevice>
         <name>Fairy lights</name>
         <on_webhook_path>fairy_lights_on</on_webhook_path>
@@ -10,4 +13,4 @@
         <on_webhook_path>master_bedroom_lamp_on</on_webhook_path>
         <off_webhook_path>master_bedroom_lamp_off</off_webhook_path>
     </iftttdevice>
-</devices>
+</config>

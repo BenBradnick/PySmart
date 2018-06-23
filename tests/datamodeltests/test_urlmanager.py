@@ -28,7 +28,7 @@ class CreatingUrlManager(unittest.TestCase):
 
         self.assertEquals(protocol, url_manager.protocol)
 
-    def test_new_UrlManager_throws_ValueError_for_invalid_protocol(self):
+    def test_new_UrlManager_raises_ValueError_for_invalid_protocol(self):
         protocol = "FTP"
         hostname = "google.co.uk"
 
@@ -41,9 +41,8 @@ class UrlManagerRaisesExceptions(unittest.TestCase):
         attribute = "Attribute"
         argument = None
         hostname = "google.co.uk"
-        url_manager = UrlManager(hostname)
 
-        self.assertRaises(ValueError, url_manager.raise_value_error_if_none, attribute, argument)
+        self.assertRaises(ValueError, UrlManager, attribute, argument)
 
 
 class UrlManagerBuildsUrl(unittest.TestCase):

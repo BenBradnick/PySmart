@@ -1,25 +1,11 @@
-from xml.etree import ElementTree
 from pysmart.datamodel.xmliftttdevice import XmlIFTTTDevice
-import logging
+from pysmart.dataaccess.xmlparser import XmlParser
 
-class DeviceXmlParser:
+
+class DeviceXmlParser(XmlParser):
 
     def __init__(self):
-        self.logger = logging.getLogger(__name__)
-
-    def get_root(self, xml_string):
-        try:
-            return ElementTree.fromstring(xml_string)
-        except Exception as e:
-            self.logger.error("Could not find root of XML string")
-            return None
-
-    def get_child_tag_text(self,parent, name):
-        tag = parent.find(name)
-        try:
-            return tag.text
-        except:
-            self.logger.warning("Could not find text for required tag: {0}".format(name))
+        super().__init__()
 
     @staticmethod
     def find_ifttt_devices(root):
@@ -33,8 +19,12 @@ class DeviceXmlParser:
         return XmlIFTTTDevice(name, on_webhook_path, off_webhook_path)
 
     def get_ifttt_devices(self, xml_string):
-        root = self.get_root(xml_string)
         list_ifttt_devices = []
+        try:
+            root = self.get_root(xml_string)
+        except ValueError:
+            self.logger.error("Could not find root in xml string.")
+            return list_ifttt_devices
         if root is not None:
             ifttt_devices = self.find_ifttt_devices(root)
             for device in ifttt_devices:
