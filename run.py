@@ -1,7 +1,7 @@
 from pysmart.datamodel.ifttturlmanager import IFTTTUrlManager
-from pysmart.datamodel.iftttdevice import IFTTTDevice
+from pysmart.datamodel.webhookdevice import WebhookDevice
 from pysmart.dataaccess.filereader import FileReader
-from pysmart.dataaccess.devicexmlparser import DeviceXmlParser
+from pysmart.dataaccess.webhookdevicexmlparser import WebhookDeviceXmlParser
 from pysmart.dataaccess.iftttapixmlparser import IFTTTApiKeyParser
 import logging
 
@@ -32,14 +32,14 @@ def run():
     url_manager = IFTTTUrlManager(api_key)
 
     # Get list of devices to configure
-    device_parser = DeviceXmlParser()
-    xml_ifttt_devices = device_parser.get_ifttt_devices(xml_string)
+    device_parser = WebhookDeviceXmlParser()
+    xml_ifttt_devices = device_parser.get_webhook_devices(xml_string)
 
     # Create devices
     ifttt_devices = []
     for xml_ifttt_device in xml_ifttt_devices:
         ifttt_devices.append(
-            IFTTTDevice(
+            WebhookDevice(
                 xml_ifttt_device.name,
                 xml_ifttt_device.on_webhook_path,
                 xml_ifttt_device.off_webhook_path,

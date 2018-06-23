@@ -1,7 +1,7 @@
 from pysmart.utility.exceptionraiser import ExceptionRaiser
 
 
-class XmlIFTTTDevice:
+class WebhookDeviceXmlConfig:
 
     def __init__(self, name, on_webhook_path, off_webhook_path):
         ExceptionRaiser.raise_value_error_if_none("on_webhook_path", on_webhook_path)

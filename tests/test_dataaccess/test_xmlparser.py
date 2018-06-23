@@ -36,16 +36,16 @@ class GetChildTagTextMethod(unittest.TestCase):
             <config>
                 <ifttt_api_key>
                 </ifttt_api_key>
-                <iftttdevice>
+                <webhook_device>
                     <name>Fairy lights</name>
                     <on_webhook_path>fairy_lights_on</on_webhook_path>
                     <off_webhook_path>fairy_lights_off</off_webhook_path>
-                </iftttdevice>
-                <iftttdevice>
+                </webhook_device>
+                <webhook_device>
                     <name>Master bedroom lamp</name>
                     <on_webhook_path>master_bedroom_lamp_on</on_webhook_path>
                     <off_webhook_path>master_bedroom_lamp_off</off_webhook_path>
-                </iftttdevice>
+                </webhook_device>
             </config>
         """
         root = XmlParser.get_root(xml_string)

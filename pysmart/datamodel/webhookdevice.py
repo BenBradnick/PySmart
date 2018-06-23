@@ -5,7 +5,7 @@ from pysmart.framework.httpstatuscodes import StatusCodes
 from pysmart.utility.exceptionraiser import ExceptionRaiser
 
 
-class IFTTTDevice(Device):
+class WebhookDevice(Device):
 
     def __init__(self, name, on_webhook_path, off_webhook_path, url_manager):
         ExceptionRaiser.raise_value_error_if_none("on_webhook_path", on_webhook_path)
