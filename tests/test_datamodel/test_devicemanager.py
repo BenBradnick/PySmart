@@ -1,5 +1,6 @@
 from pysmart.datamodel.devicemanager import DeviceManager
 from pysmart.datamodel.device import Device
+from pysmart.framework.devicestate import DeviceState
 import unittest
 
 
@@ -282,3 +283,84 @@ class DeleteMethod(unittest.TestCase):
         self.assertEquals(2, len(device_manager.device_list))
         self.assertEquals(device1_name, device_manager.device_list[0].name)
         self.assertEquals(device2_name, device_manager.device_list[1].name)
+
+
+class TurnOnMethod(unittest.TestCase):
+
+    def test_switches_state_of_device_to_on_when_device_with_name_exists(self):
+        device_name = "Bedroom lamp"
+        device = Device(device_name)
+        device_manager = DeviceManager(devices=device)
+
+        device_manager.turn_on(device_name)
+
+        self.assertEquals(DeviceState.ON, device_manager.find(device_name).state)
+
+    def test_switches_state_of_correct_device_to_on_when_multiple_devices_exist(self):
+        device1_name = "Bedroom lamp"
+        device2_name = "Living room light"
+        device1 = Device(device1_name)
+        device2 = Device(device2_name)
+        device_list = [device1, device2]
+        device_manager = DeviceManager(devices=device_list)
+
+        device_manager.turn_on(device2_name)
+
+        self.assertEquals(DeviceState.ON, device_manager.find(device2_name).state)
+        self.assertEquals(DeviceState.OFF, device_manager.find(device1_name).state)
+
+    def test_does_not_switch_state_of_any_device_if_device_does_not_exist(self):
+        device1_name = "Bedroom lamp"
+        device2_name = "Living room light"
+        device1 = Device(device1_name)
+        device2 = Device(device2_name)
+        device_list = [device1, device2]
+        device_manager = DeviceManager(devices=device_list)
+
+        device_manager.turn_on("Heating")
+
+        self.assertEquals(DeviceState.OFF, device_manager.find(device2_name).state)
+        self.assertEquals(DeviceState.OFF, device_manager.find(device1_name).state)
+
+
+class TurnOffMethod(unittest.TestCase):
+
+    def test_switches_state_of_device_to_off_when_device_with_name_exists(self):
+        device_name = "Bedroom lamp"
+        device = Device(device_name)
+        device_manager = DeviceManager(devices=device)
+        device_manager.turn_on(device_name)
+
+        device_manager.turn_off(device_name)
+
+        self.assertEquals(DeviceState.OFF, device_manager.find(device_name).state)
+
+    def test_switches_state_of_correct_device_to_off_when_multiple_devices_exist(self):
+        device1_name = "Bedroom lamp"
+        device2_name = "Living room light"
+        device1 = Device(device1_name)
+        device2 = Device(device2_name)
+        device_list = [device1, device2]
+        device_manager = DeviceManager(devices=device_list)
+        device_manager.turn_on(device1_name)
+        device_manager.turn_on(device2_name)
+
+        device_manager.turn_off(device2_name)
+
+        self.assertEquals(DeviceState.OFF, device_manager.find(device2_name).state)
+        self.assertEquals(DeviceState.ON, device_manager.find(device1_name).state)
+
+    def test_does_not_switch_state_of_any_device_if_device_does_not_exist(self):
+        device1_name = "Bedroom lamp"
+        device2_name = "Living room light"
+        device1 = Device(device1_name)
+        device2 = Device(device2_name)
+        device_list = [device1, device2]
+        device_manager = DeviceManager(devices=device_list)
+        device_manager.turn_on(device1_name)
+        device_manager.turn_on(device2_name)
+
+        device_manager.turn_off("Heating")
+
+        self.assertEquals(DeviceState.ON, device_manager.find(device2_name).state)
+        self.assertEquals(DeviceState.ON, device_manager.find(device1_name).state)

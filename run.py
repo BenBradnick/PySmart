@@ -3,6 +3,7 @@ from pysmart.datamodel.webhookdevice import WebhookDevice
 from pysmart.dataaccess.filereader import FileReader
 from pysmart.dataaccess.webhookdevicexmlparser import WebhookDeviceXmlParser
 from pysmart.dataaccess.iftttapixmlparser import IFTTTApiKeyParser
+from pysmart.datamodel.devicemanager import DeviceManager
 import logging
 
 
@@ -45,7 +46,10 @@ def run():
             )
         )
 
-    webhook_devices[0].turn_on()
+    # Create device manager
+    device_manager = DeviceManager(webhook_devices)
+
+    device_manager.turn_on("Fairy lights")
 
 
 if __name__ == "__main__":

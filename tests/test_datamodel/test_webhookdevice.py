@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 from pysmart.datamodel.webhookdevice import WebhookDevice
 from pysmart.dataaccess.webhooksender import WebhookSender
 from pysmart.framework.httpstatuscodes import StatusCodes
-from pysmart.framework.state import State
+from pysmart.framework.devicestate import DeviceState
 
 
 class CreateNewWebhookDevice(unittest.TestCase):
@@ -62,7 +62,7 @@ class SwitchingDeviceState(unittest.TestCase):
         device.turn_on()
 
         WebhookSender.send.assert_called_once()
-        self.assertEquals(State.ON, device.state)
+        self.assertEquals(DeviceState.ON, device.state)
 
     def test_turning_on_device_keeps_state_off_when_http_status_not_ok(self):
         name = "Lamp switch"
@@ -76,4 +76,4 @@ class SwitchingDeviceState(unittest.TestCase):
         device.turn_on()
 
         WebhookSender.send.assert_called_once()
-        self.assertEquals(State.OFF, device.state)
+        self.assertEquals(DeviceState.OFF, device.state)

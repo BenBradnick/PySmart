@@ -16,6 +16,7 @@ class DeviceManager:
             if self.device_with_same_name_already_exists(device):
                 raise ValueError("Device already exists with same name")
             self.device_list.append(device)
+            self.logger.debug("Added {0}".format(device.name))
         else:
             raise TypeError("Cannot add type {0} to device list".format(type(device)))
 
@@ -46,4 +47,16 @@ class DeviceManager:
                 del self.device_list[index]
                 return
 
-    # TODO: turn on and turn off methods by name
+    def turn_on(self, device_name):
+        device = self.find(device_name)
+        if device is not None:
+            device.turn_on()
+        else:
+            self.logger.error("{0} does not exist".format(device_name))
+
+    def turn_off(self, device_name):
+        device = self.find(device_name)
+        if device is not None:
+            device.turn_off()
+        else:
+            self.logger.error("{0} does not exist".format(device_name))
