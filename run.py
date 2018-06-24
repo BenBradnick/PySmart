@@ -19,35 +19,33 @@ def run():
     ch.setFormatter(formatter)
     logger.addHandler(ch)
 
-    # Device file
-    device_xml_filepath = "configuration/config.xml"
-
-    # Read in device file
+    # Read in configuration file
+    configuration_filepath = "configuration/config.xml"
     file_reader = FileReader()
-    xml_string = file_reader.read(device_xml_filepath)
+    xml_string = file_reader.read(configuration_filepath)
 
     # Configure URL manager
     api_parser = IFTTTApiKeyParser()
     api_key = api_parser.get_api_key(xml_string)
     url_manager = IFTTTUrlManager(api_key)
 
-    # Get list of devices to configure
+    # Get list of device configurations
     device_parser = WebhookDeviceXmlParser()
-    xml_ifttt_devices = device_parser.get_webhook_devices(xml_string)
+    webhook_device_configs = device_parser.get_webhook_device_configurations(xml_string)
 
     # Create devices
-    ifttt_devices = []
-    for xml_ifttt_device in xml_ifttt_devices:
-        ifttt_devices.append(
+    webhook_devices = []
+    for device_config in webhook_device_configs:
+        webhook_devices.append(
             WebhookDevice(
-                xml_ifttt_device.name,
-                xml_ifttt_device.on_webhook_path,
-                xml_ifttt_device.off_webhook_path,
+                device_config.name,
+                device_config.on_webhook_path,
+                device_config.off_webhook_path,
                 url_manager
             )
         )
 
-    ifttt_devices[0].turn_on()
+    webhook_devices[0].turn_on()
 
 
 if __name__ == "__main__":

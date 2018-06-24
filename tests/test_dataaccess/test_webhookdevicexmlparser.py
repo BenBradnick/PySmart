@@ -2,7 +2,7 @@ import unittest
 from pysmart.dataaccess.webhookdevicexmlparser import WebhookDeviceXmlParser
 
 
-class ParsingWebhookDeviceXmlFile(unittest.TestCase):
+class GetWebhookDeviceConfigurationsMethod(unittest.TestCase):
 
     def test_parser_gets_one_webhook_device_from_valid_xml_string(self):
         parser = WebhookDeviceXmlParser()
@@ -15,7 +15,7 @@ class ParsingWebhookDeviceXmlFile(unittest.TestCase):
             </webhook_device>
         </devices>"""
 
-        webhook_devices = parser.get_webhook_devices(xml_string)
+        webhook_devices = parser.get_webhook_device_configurations(xml_string)
 
         self.assertEquals(1, len(webhook_devices))
         self.assertEquals("Fairy lights", webhook_devices[0].name)
@@ -38,7 +38,7 @@ class ParsingWebhookDeviceXmlFile(unittest.TestCase):
             </webhook_device>
         </devices>"""
 
-        webhook_devices = parser.get_webhook_devices(xml_string)
+        webhook_devices = parser.get_webhook_device_configurations(xml_string)
 
         self.assertEquals(2, len(webhook_devices))
         self.assertEquals("Fairy lights", webhook_devices[0].name)
@@ -56,7 +56,7 @@ class ParsingWebhookDeviceXmlFile(unittest.TestCase):
             </webhook_device>
         </devices>"""
 
-        webhook_devices = parser.get_webhook_devices(xml_string)
+        webhook_devices = parser.get_webhook_device_configurations(xml_string)
 
         self.assertEquals(0, len(webhook_devices))
 
@@ -64,7 +64,7 @@ class ParsingWebhookDeviceXmlFile(unittest.TestCase):
         parser = WebhookDeviceXmlParser()
         xml_string = '<?xml version="1.0" encoding="UTF-8"?>'
 
-        webhook_devices = parser.get_webhook_devices(xml_string)
+        webhook_devices = parser.get_webhook_device_configurations(xml_string)
 
         self.assertEquals(0, len(webhook_devices))
 
@@ -72,7 +72,7 @@ class ParsingWebhookDeviceXmlFile(unittest.TestCase):
         parser = WebhookDeviceXmlParser()
         xml_string = ''
 
-        webhook_devices = parser.get_webhook_devices(xml_string)
+        webhook_devices = parser.get_webhook_device_configurations(xml_string)
 
         self.assertEquals(0, len(webhook_devices))
 
