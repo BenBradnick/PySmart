@@ -49,8 +49,6 @@ def run():
     # Create device manager
     device_manager = DeviceManager(webhook_devices)
 
-    device_manager.turn_on("Fairy lights")
-
 
 if __name__ == "__main__":
     run()
